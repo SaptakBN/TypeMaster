@@ -1,0 +1,23 @@
+.success{
+  color: green!important;
+}
+.fail{
+  color: red
+}
+.warn{
+  background-color: bisque;
+  font-weight: bold;
+  border-radius: 2px;
+}
+.words{
+  display: flex;
+  margin: auto 5px auto 0px;
+  text-align: justify;
+}
+.para p{
+  font-weight: lighter;
+  width: 40%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

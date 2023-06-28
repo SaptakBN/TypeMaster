@@ -1,0 +1,26 @@
+<p>Mistakes: {{mistake}}</p>
+<p>Time: {{time}} sec</p>
+<div class="para">
+  <p style="overflow-wrap: break-word;">
+    <ng-container *ngFor="let w of wordArr, let wi=index">
+    <span class="words" [ngClass]="{'warn': text_input.split(' ')[wi]!=undefined && wi==text_input.split(' ').length-1}" >
+      <ng-container *ngFor="let l of w.split(''), let li=index">
+        <span [ngClass]="{'success':text_input.split(' ')[wi]!=undefined && l==text_input.split(' ')[wi][li],
+                          'fail': text_input.split(' ')[wi]!=undefined && ((l!=text_input.split(' ')[wi][li] && li==text_input.split(' ')[wi].length-1)||(l!=text_input.split(' ')[wi][li] && li<text_input.split(' ')[wi].length-1)),}">{{l}}</span>
+      </ng-container>
+    </span>
+  </ng-container>
+</p>
+</div>
+
+
+<textarea name="input" id="input" cols="81" rows="10" [(ngModel)]="text_input" (keyup)="OnFail()"
+  (keydown.space)="spaceCheck()" [disabled]="textField"></textarea>
+
+<br>
+
+  <button (click)="startTest()">Start Test</button>
+  <button (click)="ResetTest()">Reset Test</button>
+
+  <ng-container *ngIf="wpm!=undefined"><p>Words per minute: {{wpm}}</p></ng-container>
+  <ng-container *ngIf="accuracy!=undefined"><p>Typing accuracy: {{accuracy}}%</p></ng-container>
