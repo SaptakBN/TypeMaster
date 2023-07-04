@@ -1,26 +1,58 @@
-<p>Mistakes: {{mistake}}</p>
-<p>Time: {{time}} sec</p>
-<div class="para">
-  <p style="overflow-wrap: break-word;">
-    <ng-container *ngFor="let w of wordArr, let wi=index">
-    <span class="words" [ngClass]="{'warn': text_input.split(' ')[wi]!=undefined && wi==text_input.split(' ').length-1}" >
-      <ng-container *ngFor="let l of w.split(''), let li=index">
-        <span [ngClass]="{'success':text_input.split(' ')[wi]!=undefined && l==text_input.split(' ')[wi][li],
-                          'fail': text_input.split(' ')[wi]!=undefined && ((l!=text_input.split(' ')[wi][li] && li==text_input.split(' ')[wi].length-1)||(l!=text_input.split(' ')[wi][li] && li<text_input.split(' ')[wi].length-1)),}">{{l}}</span>
-      </ng-container>
-    </span>
-  </ng-container>
-</p>
+<div class="container-fluid d-flex">
+  <div class="container d-block col col-sm-12 col-md-8 col-lg-6 m-auto">
+    <h1 class="fw-light text-center text-secondary">Typing test<span class="loader__dot">.</span><span
+        class="loader__dot">.</span><span class="loader__dot">.</span></h1>
+    <div class="d-flex text-light fs-5 my-3">
+      <p class="my-auto p-2 bg-danger-subtle text-danger rounded-1">Mistakes: {{mistake}}</p>
+      <p class="ms-auto my-auto p-2 bg-primary rounded-1">Time: {{time}} sec</p>
+    </div>
+    <div class="para">
+      <p style="overflow-wrap: break-word;">
+        <ng-container *ngFor="let w of wordArr, let wi=index">
+          <span class="words"
+            [ngClass]="{'warn': text_input.split(' ')[wi]!=undefined && !textField && wi==text_input.split(' ').length-1}">
+            <ng-container *ngFor="let l of w.split(''), let li=index">
+              <span
+                [ngClass]="{'success':text_input.split(' ')[wi]!=undefined && l==text_input.split(' ')[wi][li],
+        'fail': text_input.split(' ')[wi]!=undefined && ((l!=text_input.split(' ')[wi][li] && li==text_input.split(' ')[wi].length-1)||(l!=text_input.split(' ')[wi][li] && li<text_input.split(' ')[wi].length-1))||(wi<text_input.split(' ').length-1&&w.length!=text_input.split(' ')[wi].length)}">{{l}}</span>
+            </ng-container>
+          </span>
+        </ng-container>
+      </p>
+    </div>
+
+
+    <textarea name="input" id="input" [(ngModel)]="text_input" (keyup)="OnFail()" (keydown.space)="spaceCheck()"
+      [disabled]="textField"></textarea>
+
+    <br>
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-lg btn-success" *ngIf="textField" (click)="startTest()">Start Test</button>
+      <button class="btn btn-lg btn-danger" *ngIf="!textField" (click)="stopTest()">Stop Test</button>
+      <button class="btn btn-lg btn-outline-light" (click)="ResetTest()">Reset Test</button>
+    </div>
+
+    <div class="result" *ngIf="wpm!=undefined">
+      <h5 class="text-light text-center fw-light">Results</h5>
+      <div class="d-flex justify-content-between mt-2 text-light">
+        <div class="d-block">
+          <ng-container>
+            <p>Words per minute: {{wpm}}</p>
+          </ng-container>
+          <ng-container>
+            <p>Typing accuracy: {{accuracy}}%</p>
+          </ng-container>
+        </div>
+        <div class="d-block">
+          <ng-container>
+            <p>Number of correct words: {{wpm-wrong.length}}</p>
+          </ng-container>
+          <ng-container>
+            <p>Number of incorrect words: {{wrong.length}}</p>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
-
-
-<textarea name="input" id="input" cols="81" rows="10" [(ngModel)]="text_input" (keyup)="OnFail()"
-  (keydown.space)="spaceCheck()" [disabled]="textField"></textarea>
-
-<br>
-
-  <button (click)="startTest()">Start Test</button>
-  <button (click)="ResetTest()">Reset Test</button>
-
-  <ng-container *ngIf="wpm!=undefined"><p>Words per minute: {{wpm}}</p></ng-container>
-  <ng-container *ngIf="accuracy!=undefined"><p>Typing accuracy: {{accuracy}}%</p></ng-container>
