@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
   para: string =
-    "It was difficult for him to admit he was wrong. He had been so certain that he was correct and the deeply held belief could never be shaken. Yet the proof that he had been incorrect stood right before his eyes. 'See daddy, I told you that they are real!' his daughter excitedly proclaimed.";
+    "It was difficult for him to admit he was wrong. He had been so certain that he was correct and the deeply held belief could never be shaken. Yet the proof that he had been incorrect stood right before his eyes. See daddy, I told you that they are real! his daughter excitedly proclaimed.";
   text_input: string = '';
   paraArr: string[] = this.para.split('');
   wordArr: string[] = this.para.split(' ');
@@ -79,7 +79,6 @@ export class MainComponent implements OnInit {
         this.accuracy = (100 - (this.mistake / this.wpm) * 100).toFixed(0);
         this.accuracy =
           this.accuracy <= 100 || this.accuracy >= 0 ? this.accuracy : 0;
-        this.time = 60;
       }
     }, 1000);
   }
